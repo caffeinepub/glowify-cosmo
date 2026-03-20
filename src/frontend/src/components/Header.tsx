@@ -15,10 +15,24 @@ export function Header() {
     { label: "Fragrance", href: "/shop" },
     { label: "New Arrivals", href: "/shop" },
     { label: "Bestsellers", href: "/shop" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-cream-light shadow-xs">
+      {/* Developer credit bar */}
+      <div
+        className="py-1 text-center"
+        style={{ background: "oklch(0.22 0.010 30)" }}
+      >
+        <p
+          className="text-xs tracking-widest uppercase font-medium"
+          style={{ color: "oklch(0.68 0.090 68)" }}
+        >
+          Developed by <span className="font-bold">Devi Sri</span>
+        </p>
+      </div>
+
       <div className="utility-strip py-2 text-center">
         <p
           className="text-xs tracking-widest uppercase font-medium"
@@ -51,7 +65,7 @@ export function Header() {
             {navLinks.map((link) => (
               <Link
                 key={link.label}
-                to={link.href as "/" | "/shop"}
+                to={link.href as "/" | "/shop" | "/contact" | "/cart"}
                 className="nav-link"
                 data-ocid="header.link"
               >
@@ -128,7 +142,7 @@ export function Header() {
             {navLinks.map((link) => (
               <Link
                 key={link.label}
-                to={link.href as "/" | "/shop"}
+                to={link.href as "/" | "/shop" | "/contact" | "/cart"}
                 className="nav-link text-sm py-1"
                 onClick={() => setMobileOpen(false)}
                 data-ocid="header.link"

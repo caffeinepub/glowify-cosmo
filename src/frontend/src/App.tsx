@@ -8,6 +8,7 @@ import {
 import { Layout } from "./components/Layout";
 import { CartProvider } from "./context/CartContext";
 import { CartPage } from "./pages/CartPage";
+import { ContactPage } from "./pages/ContactPage";
 import { HomePage } from "./pages/HomePage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { ShopPage } from "./pages/ShopPage";
@@ -40,11 +41,18 @@ const cartRoute = createRoute({
   component: CartPage,
 });
 
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/contact",
+  component: ContactPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   shopRoute,
   productRoute,
   cartRoute,
+  contactRoute,
 ]);
 
 const router = createRouter({ routeTree });
