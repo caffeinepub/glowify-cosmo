@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Link, Outlet, useRouter } from "@tanstack/react-router";
-import { CalendarHeart, Menu, X } from "lucide-react";
+import { CalendarHeart, Mail, Menu, X } from "lucide-react";
 import { useState } from "react";
+
+const CONTACT_EMAIL = "harithapaadiri@gmail.com";
 
 export function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,11 +14,23 @@ export function Layout() {
     { to: "/", label: "Home" },
     { to: "/book", label: "Book Appointment" },
     { to: "/my-appointments", label: "My Appointments" },
+    { to: "/contact", label: "Contact" },
     { to: "/admin", label: "Admin" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Developer bar */}
+      <div className="bg-gray-900 text-yellow-400 text-xs text-center py-1.5 font-medium tracking-wide">
+        Developed by Haritha &nbsp;|&nbsp;{" "}
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="underline hover:text-yellow-300 transition-colors"
+        >
+          {CONTACT_EMAIL}
+        </a>
+      </div>
+
       <header className="med-header sticky top-0 z-50 shadow-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link
@@ -28,7 +42,7 @@ export function Layout() {
               <CalendarHeart className="w-5 h-5 text-white" />
             </div>
             <span className="text-white font-bold text-xl tracking-tight">
-              MedBook
+              CarePlus
             </span>
           </Link>
 
@@ -104,7 +118,7 @@ export function Layout() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <CalendarHeart className="w-5 h-5 text-primary" />
-              <span className="font-semibold text-foreground">MedBook</span>
+              <span className="font-semibold text-foreground">CarePlus</span>
             </div>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-foreground transition-colors">
@@ -122,18 +136,33 @@ export function Layout() {
               >
                 My Appointments
               </Link>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()}.{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contact"
                 className="hover:text-foreground transition-colors"
               >
-                Built with ❤ using caffeine.ai
+                Contact
+              </Link>
+            </div>
+            <div className="flex flex-col items-center md:items-end gap-1">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                {CONTACT_EMAIL}
               </a>
-            </p>
+              <p className="text-xs text-muted-foreground">
+                © {new Date().getFullYear()}.{" "}
+                <a
+                  href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Built with ❤ using caffeine.ai
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

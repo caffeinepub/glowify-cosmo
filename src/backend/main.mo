@@ -1,13 +1,13 @@
 import Array "mo:core/Array";
 import Int "mo:core/Int";
 import Map "mo:core/Map";
-import Migration "migration";
+
 import Nat "mo:core/Nat";
 import Runtime "mo:core/Runtime";
 import Time "mo:core/Time";
 import Text "mo:core/Text";
 
-(with migration = Migration.run)
+
 actor {
   module Appointment {
     public type Status = {

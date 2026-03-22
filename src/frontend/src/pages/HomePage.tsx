@@ -77,9 +77,8 @@ export function HomePage() {
           <div className="flex flex-wrap justify-center gap-4">
             {SPECIALTIES.map((s) => (
               <Link key={s.label} to="/book">
-                <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border bg-white hover:border-primary hover:bg-secondary transition-all cursor-pointer text-sm font-medium text-foreground">
-                  <span className="text-lg">{s.icon}</span>
-                  {s.label}
+                <div className="flex items-center justify-center w-14 h-14 rounded-full border border-border bg-white hover:border-primary hover:bg-secondary transition-all cursor-pointer">
+                  <span className="text-2xl">{s.icon}</span>
                 </div>
               </Link>
             ))}
@@ -96,7 +95,7 @@ export function HomePage() {
             viewport={{ once: true }}
             className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12"
           >
-            Why Choose MedBook?
+            Why Choose CarePlus?
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {FEATURES.map((f, i) => (

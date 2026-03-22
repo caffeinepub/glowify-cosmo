@@ -8,6 +8,7 @@ import {
 import { Layout } from "./components/Layout";
 import { AdminPage } from "./pages/AdminPage";
 import { BookAppointmentPage } from "./pages/BookAppointmentPage";
+import { ContactPage } from "./pages/ContactPage";
 import { HomePage } from "./pages/HomePage";
 import { MyAppointmentsPage } from "./pages/MyAppointmentsPage";
 
@@ -39,11 +40,18 @@ const adminRoute = createRoute({
   component: AdminPage,
 });
 
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/contact",
+  component: ContactPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   bookRoute,
   myAppointmentsRoute,
   adminRoute,
+  contactRoute,
 ]);
 
 const router = createRouter({ routeTree });
