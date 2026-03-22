@@ -89,360 +89,192 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface MenuItem {
+export interface Doctor {
     id: bigint;
+    bio: string;
     name: string;
-    description: string;
-    restaurantId: bigint;
-    category: Category;
-    price: bigint;
+    specialty: string;
 }
 export type Time = bigint;
-export interface OrderItem {
-    name: string;
-    quantity: bigint;
-    price: bigint;
-    menuItemId: bigint;
-}
-export interface Restaurant {
+export interface Appointment {
     id: bigint;
-    deliveryFee: bigint;
-    minOrder: bigint;
-    name: string;
-    cuisineType: CuisineType;
-    description: string;
-    isOpen: boolean;
-    deliveryTime: bigint;
-    location: string;
-    avgRating: bigint;
-}
-export interface Order {
-    id: bigint;
-    customerName: string;
     status: Status;
-    deliveryAddress: string;
-    total: bigint;
-    deliveryFee: bigint;
-    restaurantId: bigint;
+    doctorId: bigint;
+    patientEmail: string;
+    date: string;
     timestamp: Time;
-    phone: string;
-    items: Array<OrderItem>;
-    subtotal: bigint;
-}
-export enum Category {
-    mains = "mains",
-    desserts = "desserts",
-    starters = "starters",
-    drinks = "drinks"
-}
-export enum CuisineType {
-    tacos = "tacos",
-    chinese = "chinese",
-    sushi = "sushi",
-    indian = "indian",
-    burgers = "burgers",
-    pizza = "pizza"
+    patientName: string;
+    timeSlot: string;
+    reason: string;
 }
 export enum Status {
-    preparing = "preparing",
+    cancelled = "cancelled",
     pending = "pending",
-    outForDelivery = "outForDelivery",
-    delivered = "delivered"
+    confirmed = "confirmed"
 }
 export interface backendInterface {
-    getAllOrders(): Promise<Array<Order>>;
-    getMenuItems(restaurantId: bigint): Promise<Array<MenuItem>>;
-    getOrder(id: bigint): Promise<Order>;
-    getRestaurant(id: bigint): Promise<Restaurant>;
-    getRestaurants(): Promise<Array<Restaurant>>;
-    placeOrder(restaurantId: bigint, customerName: string, deliveryAddress: string, phone: string, items: Array<OrderItem>): Promise<bigint>;
-    updateOrderStatus(id: bigint, status: Status): Promise<void>;
+    bookAppointment(doctorId: bigint, patientName: string, patientEmail: string, date: string, timeSlot: string, reason: string): Promise<bigint>;
+    getAllAppointments(): Promise<Array<Appointment>>;
+    getAppointmentsByEmail(email: string): Promise<Array<Appointment>>;
+    getDoctor(id: bigint): Promise<Doctor>;
+    getDoctors(): Promise<Array<Doctor>>;
+    updateAppointmentStatus(id: bigint, status: Status): Promise<void>;
 }
-import type { Category as _Category, CuisineType as _CuisineType, MenuItem as _MenuItem, Order as _Order, OrderItem as _OrderItem, Restaurant as _Restaurant, Status as _Status, Time as _Time } from "./declarations/backend.did.d.ts";
+import type { Appointment as _Appointment, Status as _Status, Time as _Time } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
-    async getAllOrders(): Promise<Array<Order>> {
+    async bookAppointment(arg0: bigint, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.getAllOrders();
+                const result = await this.actor.bookAppointment(arg0, arg1, arg2, arg3, arg4, arg5);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.bookAppointment(arg0, arg1, arg2, arg3, arg4, arg5);
+            return result;
+        }
+    }
+    async getAllAppointments(): Promise<Array<Appointment>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllAppointments();
                 return from_candid_vec_n1(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getAllOrders();
+            const result = await this.actor.getAllAppointments();
             return from_candid_vec_n1(this._uploadFile, this._downloadFile, result);
         }
     }
-    async getMenuItems(arg0: bigint): Promise<Array<MenuItem>> {
+    async getAppointmentsByEmail(arg0: string): Promise<Array<Appointment>> {
         if (this.processError) {
             try {
-                const result = await this.actor.getMenuItems(arg0);
-                return from_candid_vec_n6(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.getAppointmentsByEmail(arg0);
+                return from_candid_vec_n1(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getMenuItems(arg0);
-            return from_candid_vec_n6(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.getAppointmentsByEmail(arg0);
+            return from_candid_vec_n1(this._uploadFile, this._downloadFile, result);
         }
     }
-    async getOrder(arg0: bigint): Promise<Order> {
+    async getDoctor(arg0: bigint): Promise<Doctor> {
         if (this.processError) {
             try {
-                const result = await this.actor.getOrder(arg0);
-                return from_candid_Order_n2(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getOrder(arg0);
-            return from_candid_Order_n2(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getRestaurant(arg0: bigint): Promise<Restaurant> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getRestaurant(arg0);
-                return from_candid_Restaurant_n11(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getRestaurant(arg0);
-            return from_candid_Restaurant_n11(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getRestaurants(): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getRestaurants();
-                return from_candid_vec_n15(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getRestaurants();
-            return from_candid_vec_n15(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async placeOrder(arg0: bigint, arg1: string, arg2: string, arg3: string, arg4: Array<OrderItem>): Promise<bigint> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.placeOrder(arg0, arg1, arg2, arg3, arg4);
+                const result = await this.actor.getDoctor(arg0);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.placeOrder(arg0, arg1, arg2, arg3, arg4);
+            const result = await this.actor.getDoctor(arg0);
             return result;
         }
     }
-    async updateOrderStatus(arg0: bigint, arg1: Status): Promise<void> {
+    async getDoctors(): Promise<Array<Doctor>> {
         if (this.processError) {
             try {
-                const result = await this.actor.updateOrderStatus(arg0, to_candid_Status_n16(this._uploadFile, this._downloadFile, arg1));
+                const result = await this.actor.getDoctors();
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.updateOrderStatus(arg0, to_candid_Status_n16(this._uploadFile, this._downloadFile, arg1));
+            const result = await this.actor.getDoctors();
+            return result;
+        }
+    }
+    async updateAppointmentStatus(arg0: bigint, arg1: Status): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateAppointmentStatus(arg0, to_candid_Status_n6(this._uploadFile, this._downloadFile, arg1));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateAppointmentStatus(arg0, to_candid_Status_n6(this._uploadFile, this._downloadFile, arg1));
             return result;
         }
     }
 }
-function from_candid_Category_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Category): Category {
-    return from_candid_variant_n10(_uploadFile, _downloadFile, value);
-}
-function from_candid_CuisineType_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CuisineType): CuisineType {
-    return from_candid_variant_n14(_uploadFile, _downloadFile, value);
-}
-function from_candid_MenuItem_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _MenuItem): MenuItem {
-    return from_candid_record_n8(_uploadFile, _downloadFile, value);
-}
-function from_candid_Order_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Order): Order {
+function from_candid_Appointment_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Appointment): Appointment {
     return from_candid_record_n3(_uploadFile, _downloadFile, value);
-}
-function from_candid_Restaurant_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Restaurant): Restaurant {
-    return from_candid_record_n12(_uploadFile, _downloadFile, value);
 }
 function from_candid_Status_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Status): Status {
     return from_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
-function from_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: bigint;
-    deliveryFee: bigint;
-    minOrder: bigint;
-    name: string;
-    cuisineType: _CuisineType;
-    description: string;
-    isOpen: boolean;
-    deliveryTime: bigint;
-    location: string;
-    avgRating: bigint;
-}): {
-    id: bigint;
-    deliveryFee: bigint;
-    minOrder: bigint;
-    name: string;
-    cuisineType: CuisineType;
-    description: string;
-    isOpen: boolean;
-    deliveryTime: bigint;
-    location: string;
-    avgRating: bigint;
-} {
-    return {
-        id: value.id,
-        deliveryFee: value.deliveryFee,
-        minOrder: value.minOrder,
-        name: value.name,
-        cuisineType: from_candid_CuisineType_n13(_uploadFile, _downloadFile, value.cuisineType),
-        description: value.description,
-        isOpen: value.isOpen,
-        deliveryTime: value.deliveryTime,
-        location: value.location,
-        avgRating: value.avgRating
-    };
-}
 function from_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: bigint;
-    customerName: string;
     status: _Status;
-    deliveryAddress: string;
-    total: bigint;
-    deliveryFee: bigint;
-    restaurantId: bigint;
+    doctorId: bigint;
+    patientEmail: string;
+    date: string;
     timestamp: _Time;
-    phone: string;
-    items: Array<_OrderItem>;
-    subtotal: bigint;
+    patientName: string;
+    timeSlot: string;
+    reason: string;
 }): {
     id: bigint;
-    customerName: string;
     status: Status;
-    deliveryAddress: string;
-    total: bigint;
-    deliveryFee: bigint;
-    restaurantId: bigint;
+    doctorId: bigint;
+    patientEmail: string;
+    date: string;
     timestamp: Time;
-    phone: string;
-    items: Array<OrderItem>;
-    subtotal: bigint;
+    patientName: string;
+    timeSlot: string;
+    reason: string;
 } {
     return {
         id: value.id,
-        customerName: value.customerName,
         status: from_candid_Status_n4(_uploadFile, _downloadFile, value.status),
-        deliveryAddress: value.deliveryAddress,
-        total: value.total,
-        deliveryFee: value.deliveryFee,
-        restaurantId: value.restaurantId,
+        doctorId: value.doctorId,
+        patientEmail: value.patientEmail,
+        date: value.date,
         timestamp: value.timestamp,
-        phone: value.phone,
-        items: value.items,
-        subtotal: value.subtotal
+        patientName: value.patientName,
+        timeSlot: value.timeSlot,
+        reason: value.reason
     };
-}
-function from_candid_record_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: bigint;
-    name: string;
-    description: string;
-    restaurantId: bigint;
-    category: _Category;
-    price: bigint;
-}): {
-    id: bigint;
-    name: string;
-    description: string;
-    restaurantId: bigint;
-    category: Category;
-    price: bigint;
-} {
-    return {
-        id: value.id,
-        name: value.name,
-        description: value.description,
-        restaurantId: value.restaurantId,
-        category: from_candid_Category_n9(_uploadFile, _downloadFile, value.category),
-        price: value.price
-    };
-}
-function from_candid_variant_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    mains: null;
-} | {
-    desserts: null;
-} | {
-    starters: null;
-} | {
-    drinks: null;
-}): Category {
-    return "mains" in value ? Category.mains : "desserts" in value ? Category.desserts : "starters" in value ? Category.starters : "drinks" in value ? Category.drinks : value;
-}
-function from_candid_variant_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    tacos: null;
-} | {
-    chinese: null;
-} | {
-    sushi: null;
-} | {
-    indian: null;
-} | {
-    burgers: null;
-} | {
-    pizza: null;
-}): CuisineType {
-    return "tacos" in value ? CuisineType.tacos : "chinese" in value ? CuisineType.chinese : "sushi" in value ? CuisineType.sushi : "indian" in value ? CuisineType.indian : "burgers" in value ? CuisineType.burgers : "pizza" in value ? CuisineType.pizza : value;
 }
 function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    preparing: null;
+    cancelled: null;
 } | {
     pending: null;
 } | {
-    outForDelivery: null;
-} | {
-    delivered: null;
+    confirmed: null;
 }): Status {
-    return "preparing" in value ? Status.preparing : "pending" in value ? Status.pending : "outForDelivery" in value ? Status.outForDelivery : "delivered" in value ? Status.delivered : value;
+    return "cancelled" in value ? Status.cancelled : "pending" in value ? Status.pending : "confirmed" in value ? Status.confirmed : value;
 }
-function from_candid_vec_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Order>): Array<Order> {
-    return value.map((x)=>from_candid_Order_n2(_uploadFile, _downloadFile, x));
+function from_candid_vec_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Appointment>): Array<Appointment> {
+    return value.map((x)=>from_candid_Appointment_n2(_uploadFile, _downloadFile, x));
 }
-function from_candid_vec_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Restaurant>): Array<Restaurant> {
-    return value.map((x)=>from_candid_Restaurant_n11(_uploadFile, _downloadFile, x));
+function to_candid_Status_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Status): _Status {
+    return to_candid_variant_n7(_uploadFile, _downloadFile, value);
 }
-function from_candid_vec_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_MenuItem>): Array<MenuItem> {
-    return value.map((x)=>from_candid_MenuItem_n7(_uploadFile, _downloadFile, x));
-}
-function to_candid_Status_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Status): _Status {
-    return to_candid_variant_n17(_uploadFile, _downloadFile, value);
-}
-function to_candid_variant_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Status): {
-    preparing: null;
+function to_candid_variant_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Status): {
+    cancelled: null;
 } | {
     pending: null;
 } | {
-    outForDelivery: null;
-} | {
-    delivered: null;
+    confirmed: null;
 } {
-    return value == Status.preparing ? {
-        preparing: null
+    return value == Status.cancelled ? {
+        cancelled: null
     } : value == Status.pending ? {
         pending: null
-    } : value == Status.outForDelivery ? {
-        outForDelivery: null
-    } : value == Status.delivered ? {
-        delivered: null
+    } : value == Status.confirmed ? {
+        confirmed: null
     } : value;
 }
 export interface CreateActorOptions {

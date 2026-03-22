@@ -1,2 +1,2 @@
-// Legacy component - replaced by CartPage
+// Legacy file - no longer used
 export {};

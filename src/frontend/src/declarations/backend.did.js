@@ -9,156 +9,88 @@
 import { IDL } from '@icp-sdk/core/candid';
 
 export const Status = IDL.Variant({
-  'preparing' : IDL.Null,
+  'cancelled' : IDL.Null,
   'pending' : IDL.Null,
-  'outForDelivery' : IDL.Null,
-  'delivered' : IDL.Null,
+  'confirmed' : IDL.Null,
 });
 export const Time = IDL.Int;
-export const OrderItem = IDL.Record({
-  'name' : IDL.Text,
-  'quantity' : IDL.Nat,
-  'price' : IDL.Nat,
-  'menuItemId' : IDL.Nat,
-});
-export const Order = IDL.Record({
+export const Appointment = IDL.Record({
   'id' : IDL.Nat,
-  'customerName' : IDL.Text,
   'status' : Status,
-  'deliveryAddress' : IDL.Text,
-  'total' : IDL.Nat,
-  'deliveryFee' : IDL.Nat,
-  'restaurantId' : IDL.Nat,
+  'doctorId' : IDL.Nat,
+  'patientEmail' : IDL.Text,
+  'date' : IDL.Text,
   'timestamp' : Time,
-  'phone' : IDL.Text,
-  'items' : IDL.Vec(OrderItem),
-  'subtotal' : IDL.Nat,
+  'patientName' : IDL.Text,
+  'timeSlot' : IDL.Text,
+  'reason' : IDL.Text,
 });
-export const Category = IDL.Variant({
-  'mains' : IDL.Null,
-  'desserts' : IDL.Null,
-  'starters' : IDL.Null,
-  'drinks' : IDL.Null,
-});
-export const MenuItem = IDL.Record({
+export const Doctor = IDL.Record({
   'id' : IDL.Nat,
+  'bio' : IDL.Text,
   'name' : IDL.Text,
-  'description' : IDL.Text,
-  'restaurantId' : IDL.Nat,
-  'category' : Category,
-  'price' : IDL.Nat,
-});
-export const CuisineType = IDL.Variant({
-  'tacos' : IDL.Null,
-  'chinese' : IDL.Null,
-  'sushi' : IDL.Null,
-  'indian' : IDL.Null,
-  'burgers' : IDL.Null,
-  'pizza' : IDL.Null,
-});
-export const Restaurant = IDL.Record({
-  'id' : IDL.Nat,
-  'deliveryFee' : IDL.Nat,
-  'minOrder' : IDL.Nat,
-  'name' : IDL.Text,
-  'cuisineType' : CuisineType,
-  'description' : IDL.Text,
-  'isOpen' : IDL.Bool,
-  'deliveryTime' : IDL.Nat,
-  'location' : IDL.Text,
-  'avgRating' : IDL.Nat,
+  'specialty' : IDL.Text,
 });
 
 export const idlService = IDL.Service({
-  'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
-  'getMenuItems' : IDL.Func([IDL.Nat], [IDL.Vec(MenuItem)], ['query']),
-  'getOrder' : IDL.Func([IDL.Nat], [Order], ['query']),
-  'getRestaurant' : IDL.Func([IDL.Nat], [Restaurant], ['query']),
-  'getRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
-  'placeOrder' : IDL.Func(
-      [IDL.Nat, IDL.Text, IDL.Text, IDL.Text, IDL.Vec(OrderItem)],
+  'bookAppointment' : IDL.Func(
+      [IDL.Nat, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
       [IDL.Nat],
       [],
     ),
-  'updateOrderStatus' : IDL.Func([IDL.Nat, Status], [], []),
+  'getAllAppointments' : IDL.Func([], [IDL.Vec(Appointment)], ['query']),
+  'getAppointmentsByEmail' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(Appointment)],
+      ['query'],
+    ),
+  'getDoctor' : IDL.Func([IDL.Nat], [Doctor], ['query']),
+  'getDoctors' : IDL.Func([], [IDL.Vec(Doctor)], ['query']),
+  'updateAppointmentStatus' : IDL.Func([IDL.Nat, Status], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
   const Status = IDL.Variant({
-    'preparing' : IDL.Null,
+    'cancelled' : IDL.Null,
     'pending' : IDL.Null,
-    'outForDelivery' : IDL.Null,
-    'delivered' : IDL.Null,
+    'confirmed' : IDL.Null,
   });
   const Time = IDL.Int;
-  const OrderItem = IDL.Record({
-    'name' : IDL.Text,
-    'quantity' : IDL.Nat,
-    'price' : IDL.Nat,
-    'menuItemId' : IDL.Nat,
-  });
-  const Order = IDL.Record({
+  const Appointment = IDL.Record({
     'id' : IDL.Nat,
-    'customerName' : IDL.Text,
     'status' : Status,
-    'deliveryAddress' : IDL.Text,
-    'total' : IDL.Nat,
-    'deliveryFee' : IDL.Nat,
-    'restaurantId' : IDL.Nat,
+    'doctorId' : IDL.Nat,
+    'patientEmail' : IDL.Text,
+    'date' : IDL.Text,
     'timestamp' : Time,
-    'phone' : IDL.Text,
-    'items' : IDL.Vec(OrderItem),
-    'subtotal' : IDL.Nat,
+    'patientName' : IDL.Text,
+    'timeSlot' : IDL.Text,
+    'reason' : IDL.Text,
   });
-  const Category = IDL.Variant({
-    'mains' : IDL.Null,
-    'desserts' : IDL.Null,
-    'starters' : IDL.Null,
-    'drinks' : IDL.Null,
-  });
-  const MenuItem = IDL.Record({
+  const Doctor = IDL.Record({
     'id' : IDL.Nat,
+    'bio' : IDL.Text,
     'name' : IDL.Text,
-    'description' : IDL.Text,
-    'restaurantId' : IDL.Nat,
-    'category' : Category,
-    'price' : IDL.Nat,
-  });
-  const CuisineType = IDL.Variant({
-    'tacos' : IDL.Null,
-    'chinese' : IDL.Null,
-    'sushi' : IDL.Null,
-    'indian' : IDL.Null,
-    'burgers' : IDL.Null,
-    'pizza' : IDL.Null,
-  });
-  const Restaurant = IDL.Record({
-    'id' : IDL.Nat,
-    'deliveryFee' : IDL.Nat,
-    'minOrder' : IDL.Nat,
-    'name' : IDL.Text,
-    'cuisineType' : CuisineType,
-    'description' : IDL.Text,
-    'isOpen' : IDL.Bool,
-    'deliveryTime' : IDL.Nat,
-    'location' : IDL.Text,
-    'avgRating' : IDL.Nat,
+    'specialty' : IDL.Text,
   });
   
   return IDL.Service({
-    'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
-    'getMenuItems' : IDL.Func([IDL.Nat], [IDL.Vec(MenuItem)], ['query']),
-    'getOrder' : IDL.Func([IDL.Nat], [Order], ['query']),
-    'getRestaurant' : IDL.Func([IDL.Nat], [Restaurant], ['query']),
-    'getRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
-    'placeOrder' : IDL.Func(
-        [IDL.Nat, IDL.Text, IDL.Text, IDL.Text, IDL.Vec(OrderItem)],
+    'bookAppointment' : IDL.Func(
+        [IDL.Nat, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
         [IDL.Nat],
         [],
       ),
-    'updateOrderStatus' : IDL.Func([IDL.Nat, Status], [], []),
+    'getAllAppointments' : IDL.Func([], [IDL.Vec(Appointment)], ['query']),
+    'getAppointmentsByEmail' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(Appointment)],
+        ['query'],
+      ),
+    'getDoctor' : IDL.Func([IDL.Nat], [Doctor], ['query']),
+    'getDoctors' : IDL.Func([], [IDL.Vec(Doctor)], ['query']),
+    'updateAppointmentStatus' : IDL.Func([IDL.Nat, Status], [], []),
   });
 };
 

@@ -1,2 +1,2 @@
-// Legacy component - replaced
+// Legacy file - no longer used
 export {};

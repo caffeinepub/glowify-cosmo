@@ -10,71 +10,37 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export type Category = { 'mains' : null } |
-  { 'desserts' : null } |
-  { 'starters' : null } |
-  { 'drinks' : null };
-export type CuisineType = { 'tacos' : null } |
-  { 'chinese' : null } |
-  { 'sushi' : null } |
-  { 'indian' : null } |
-  { 'burgers' : null } |
-  { 'pizza' : null };
-export interface MenuItem {
+export interface Appointment {
   'id' : bigint,
-  'name' : string,
-  'description' : string,
-  'restaurantId' : bigint,
-  'category' : Category,
-  'price' : bigint,
-}
-export interface Order {
-  'id' : bigint,
-  'customerName' : string,
   'status' : Status,
-  'deliveryAddress' : string,
-  'total' : bigint,
-  'deliveryFee' : bigint,
-  'restaurantId' : bigint,
+  'doctorId' : bigint,
+  'patientEmail' : string,
+  'date' : string,
   'timestamp' : Time,
-  'phone' : string,
-  'items' : Array<OrderItem>,
-  'subtotal' : bigint,
+  'patientName' : string,
+  'timeSlot' : string,
+  'reason' : string,
 }
-export interface OrderItem {
-  'name' : string,
-  'quantity' : bigint,
-  'price' : bigint,
-  'menuItemId' : bigint,
-}
-export interface Restaurant {
+export interface Doctor {
   'id' : bigint,
-  'deliveryFee' : bigint,
-  'minOrder' : bigint,
+  'bio' : string,
   'name' : string,
-  'cuisineType' : CuisineType,
-  'description' : string,
-  'isOpen' : boolean,
-  'deliveryTime' : bigint,
-  'location' : string,
-  'avgRating' : bigint,
+  'specialty' : string,
 }
-export type Status = { 'preparing' : null } |
+export type Status = { 'cancelled' : null } |
   { 'pending' : null } |
-  { 'outForDelivery' : null } |
-  { 'delivered' : null };
+  { 'confirmed' : null };
 export type Time = bigint;
 export interface _SERVICE {
-  'getAllOrders' : ActorMethod<[], Array<Order>>,
-  'getMenuItems' : ActorMethod<[bigint], Array<MenuItem>>,
-  'getOrder' : ActorMethod<[bigint], Order>,
-  'getRestaurant' : ActorMethod<[bigint], Restaurant>,
-  'getRestaurants' : ActorMethod<[], Array<Restaurant>>,
-  'placeOrder' : ActorMethod<
-    [bigint, string, string, string, Array<OrderItem>],
+  'bookAppointment' : ActorMethod<
+    [bigint, string, string, string, string, string],
     bigint
   >,
-  'updateOrderStatus' : ActorMethod<[bigint, Status], undefined>,
+  'getAllAppointments' : ActorMethod<[], Array<Appointment>>,
+  'getAppointmentsByEmail' : ActorMethod<[string], Array<Appointment>>,
+  'getDoctor' : ActorMethod<[bigint], Doctor>,
+  'getDoctors' : ActorMethod<[], Array<Doctor>>,
+  'updateAppointmentStatus' : ActorMethod<[bigint, Status], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

@@ -1,2 +1,4 @@
-// Legacy page - replaced
-export {};
+// Legacy page - no longer used
+export function OrderPage() {
+  return null;
+}

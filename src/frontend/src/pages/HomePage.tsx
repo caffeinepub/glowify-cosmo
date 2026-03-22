@@ -1,393 +1,215 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Leaf, ShieldCheck, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
+import { CalendarCheck, Clock, Shield, Star, Stethoscope } from "lucide-react";
 import { motion } from "motion/react";
-import { ProductCard } from "../components/ProductCard";
-import { bestsellers } from "../data/products";
+import { useGetDoctors } from "../hooks/useQueries";
 
-const categoryItems = [
-  {
-    name: "Skincare",
-    tagline: "Nourish & Protect",
-    image: "/assets/generated/category-skincare.dim_600x500.jpg",
-  },
-  {
-    name: "Makeup",
-    tagline: "Express & Enhance",
-    image: "/assets/generated/category-makeup.dim_600x500.jpg",
-  },
-  {
-    name: "Fragrance",
-    tagline: "Captivate & Linger",
-    image: "/assets/generated/category-fragrance.dim_600x500.jpg",
-  },
+const SPECIALTIES = [
+  { icon: "🫀", label: "Cardiology" },
+  { icon: "🧠", label: "Neurology" },
+  { icon: "🦷", label: "Dentistry" },
+  { icon: "👁", label: "Ophthalmology" },
+  { icon: "🦴", label: "Orthopedics" },
+  { icon: "🩺", label: "General Medicine" },
 ];
 
-const features = [
-  { icon: Leaf, label: "100% Natural", desc: "Botanical-sourced ingredients" },
-  { icon: Sparkles, label: "Cruelty-Free", desc: "No animal testing, ever" },
+const FEATURES = [
   {
-    icon: ShieldCheck,
-    label: "Dermatologist Tested",
-    desc: "Safe for all skin types",
+    icon: CalendarCheck,
+    title: "Easy Scheduling",
+    desc: "Book appointments in under 2 minutes with our streamlined 4-step process.",
+  },
+  {
+    icon: Clock,
+    title: "Flexible Time Slots",
+    desc: "Choose from morning to evening slots every 30 minutes to fit your schedule.",
+  },
+  {
+    icon: Shield,
+    title: "Secure & Private",
+    desc: "Your medical information is protected with enterprise-grade security.",
   },
 ];
 
 export function HomePage() {
-  const navigate = useNavigate();
+  const { data: doctors = [], isLoading } = useGetDoctors();
 
   return (
     <div>
       {/* Hero */}
-      <section className="hero-bg overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              className="order-2 md:order-1"
-            >
-              <p
-                className="text-xs font-bold tracking-widest uppercase mb-4"
-                style={{ color: "oklch(0.68 0.090 68)" }}
+      <section className="med-hero py-20 md:py-28 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 font-medium px-4 py-1.5">
+              <Stethoscope className="w-3.5 h-3.5 mr-1.5" />
+              Trusted Medical Appointments
+            </Badge>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-foreground leading-tight mb-5 tracking-tight">
+              Book Your Medical
+              <br />
+              <span className="text-primary">Appointment</span> Today
+            </h1>
+            <p className="text-lg text-muted-foreground mb-9 max-w-xl mx-auto">
+              Connect with top specialists. Choose your time. Get the care you
+              deserve — all in a few clicks.
+            </p>
+            <Link to="/book">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-navy-dark text-white font-semibold px-10 py-3 rounded-full shadow-lg text-base"
+                data-ocid="hero.primary_button"
               >
-                New Collection — Spring 2026
-              </p>
-              <h1
-                className="font-display leading-tight mb-6"
-                style={{
-                  fontSize: "clamp(2.4rem, 5vw, 4rem)",
-                  fontWeight: 700,
-                }}
-              >
-                <span style={{ color: "oklch(0.22 0.010 30)" }}>
-                  Discover Your
-                </span>{" "}
-                <br />
-                <span className="gold-text italic">RADIANCE</span>
-              </h1>
-              <p
-                className="text-base md:text-lg leading-relaxed mb-8 max-w-sm"
-                style={{ color: "oklch(0.42 0.018 40)" }}
-              >
-                Luxurious beauty rituals crafted from nature&apos;s finest
-                botanicals. Reveal your skin&apos;s natural luminosity.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => navigate({ to: "/shop" })}
-                  className="btn-gold rounded-sm"
-                  data-ocid="hero.primary_button"
-                >
-                  Shop New Collection
-                </button>
-                <Link
-                  to="/shop"
-                  className="btn-outline-gold rounded-sm inline-flex items-center gap-2"
-                  data-ocid="hero.secondary_button"
-                >
-                  Explore All
-                  <ArrowRight size={13} />
-                </Link>
-              </div>
+                Book an Appointment
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
 
-              <div className="flex flex-wrap gap-4 mt-10">
-                {features.map(({ icon: Icon, label, desc }) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center"
-                      style={{ background: "oklch(0.68 0.090 68 / 0.15)" }}
-                    >
-                      <Icon
-                        size={13}
-                        style={{ color: "oklch(0.62 0.085 68)" }}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className="text-xs font-bold"
-                        style={{ color: "oklch(0.22 0.010 30)" }}
-                      >
-                        {label}
-                      </p>
-                      <p
-                        className="text-[10px]"
-                        style={{ color: "oklch(0.52 0.018 40)" }}
-                      >
-                        {desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="order-1 md:order-2 relative"
-            >
-              <div
-                className="rounded-3xl overflow-hidden"
-                style={{ boxShadow: "0 20px 60px oklch(0.68 0.090 68 / 0.18)" }}
-              >
-                <img
-                  src="/assets/generated/hero-cosmetics.dim_900x700.jpg"
-                  alt="Glowify Cosmo hero"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="absolute -bottom-4 -left-4 md:-left-8 bg-cream-light rounded-2xl px-4 py-3 shadow-card-hover"
-              >
-                <p className="text-xs font-bold uppercase tracking-widest gold-text">
-                  ⭐ Top Rated
-                </p>
-                <p
-                  className="text-sm font-display font-semibold"
-                  style={{ color: "oklch(0.22 0.010 30)" }}
-                >
-                  Rose Glow Serum
-                </p>
-                <p
-                  className="text-xs"
-                  style={{ color: "oklch(0.52 0.018 40)" }}
-                >
-                  ₹3,780 · 248 reviews
-                </p>
-              </motion.div>
-            </motion.div>
+      {/* Specialties */}
+      <section className="bg-white py-14 px-4 border-b border-border">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4">
+            {SPECIALTIES.map((s) => (
+              <Link key={s.label} to="/book">
+                <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border bg-white hover:border-primary hover:bg-secondary transition-all cursor-pointer text-sm font-medium text-foreground">
+                  <span className="text-lg">{s.icon}</span>
+                  {s.label}
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Category Tiles */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <p className="text-xs font-bold tracking-widest uppercase mb-3 gold-text">
-            Shop by Category
-          </p>
-          <h2 className="section-title">Your Beauty Essentials</h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {categoryItems.map(({ name, tagline, image }, i) => (
-            <motion.div
-              key={name}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <Link
-                to="/shop"
-                className="group block"
-                data-ocid="category.card"
-              >
-                <div
-                  className="rounded-2xl overflow-hidden relative"
-                  style={{ border: "1px solid oklch(0.88 0.022 60)" }}
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={image}
-                      alt={name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5 bg-cream-light">
-                    <h3
-                      className="font-display text-xl font-bold mb-1"
-                      style={{ color: "oklch(0.22 0.010 30)" }}
-                    >
-                      {name}
-                    </h3>
-                    <p
-                      className="text-sm"
-                      style={{ color: "oklch(0.52 0.018 40)" }}
-                    >
-                      {tagline}
-                    </p>
-                    <div className="flex items-center gap-1 mt-3 gold-text text-xs font-semibold tracking-wide">
-                      Shop Now <ArrowRight size={12} />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Bestsellers */}
-      <section className="py-20" style={{ background: "oklch(0.96 0.012 60)" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <motion.div
+      {/* Features */}
+      <section className="py-16 px-4 bg-background">
+        <div className="max-w-5xl mx-auto">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12"
           >
-            <p className="text-xs font-bold tracking-widest uppercase mb-3 gold-text">
-              Our Bestsellers
-            </p>
-            <h2 className="section-title">Loved by Thousands</h2>
-            <p
-              className="mt-3 text-sm"
-              style={{ color: "oklch(0.50 0.018 40)" }}
-            >
-              Discover the products our community can&apos;t live without.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {bestsellers.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
+            Why Choose MedBook?
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {FEATURES.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <f.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-lg text-foreground mb-2">
+                  {f.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {f.desc}
+                </p>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-10">
-            <Link
-              to="/shop"
-              className="btn-outline-gold rounded-sm inline-flex items-center gap-2"
-              data-ocid="bestsellers.secondary_button"
-            >
-              View All Products <ArrowRight size={13} />
+      {/* Featured Doctors */}
+      <section className="py-16 px-4 bg-white border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Our Specialists
+            </h2>
+            <Link to="/book">
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-secondary"
+                data-ocid="doctors.primary_button"
+              >
+                Book Now
+              </Button>
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* Ingredient Story */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div
-              className="rounded-3xl overflow-hidden"
-              style={{ border: "1px solid oklch(0.88 0.022 60)" }}
-            >
-              <img
-                src="/assets/generated/ingredients-story.dim_700x600.jpg"
-                alt="Natural botanical ingredients"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <p className="text-xs font-bold tracking-widest uppercase mb-4 gold-text">
-              Our Philosophy
-            </p>
-            <h2 className="section-title mb-6">
-              Nature&apos;s Finest,{" "}
-              <span className="italic gold-text">Bottled for You</span>
-            </h2>
-            <p
-              className="text-base leading-relaxed mb-4"
-              style={{ color: "oklch(0.42 0.018 40)" }}
-            >
-              Every Glowify Cosmo formula begins with a singular question: what
-              does skin truly need? We source the finest botanical extracts —
-              Bulgarian rose, Moroccan argan, Korean ginseng — and combine them
-              with cutting-edge peptide technology.
-            </p>
-            <p
-              className="text-base leading-relaxed mb-8"
-              style={{ color: "oklch(0.42 0.018 40)" }}
-            >
-              Zero harmful chemicals. Zero compromises. Just pure, effective
-              beauty that your skin loves and your conscience approves.
-            </p>
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {[
-                ["150+", "Natural Ingredients"],
-                ["12K+", "Happy Customers"],
-                ["100%", "Cruelty Free"],
-              ].map(([num, label]) => (
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {[1, 2, 3].map((i) => (
                 <div
-                  key={label}
-                  className="text-center p-3 rounded-xl"
-                  style={{ background: "oklch(0.90 0.032 20)" }}
+                  key={i}
+                  className="bg-background rounded-2xl p-6 animate-pulse h-48"
+                  data-ocid="doctors.loading_state"
+                />
+              ))}
+            </div>
+          ) : doctors.length === 0 ? (
+            <div
+              className="text-center py-12 text-muted-foreground"
+              data-ocid="doctors.empty_state"
+            >
+              <Stethoscope className="w-10 h-10 mx-auto mb-3 opacity-40" />
+              <p>No doctors available yet.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {doctors.slice(0, 6).map((doctor, i) => (
+                <motion.div
+                  key={String(doctor.id)}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="bg-background rounded-2xl p-5 border border-border hover:border-primary hover:shadow-card transition-all"
+                  data-ocid={`doctors.item.${i + 1}`}
                 >
-                  <p className="font-display text-2xl font-bold gold-text">
-                    {num}
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary font-bold text-lg">
+                        {doctor.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-foreground text-sm leading-tight">
+                        {doctor.name}
+                      </h3>
+                      <p className="text-primary text-xs font-medium mt-0.5">
+                        {doctor.specialty}
+                      </p>
+                      <div className="flex items-center gap-1 mt-1.5">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            className="w-3 h-3 fill-yellow-400 text-yellow-400"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground text-xs mt-3 leading-relaxed line-clamp-2">
+                    {doctor.bio}
                   </p>
-                  <p
-                    className="text-xs mt-1"
-                    style={{ color: "oklch(0.42 0.018 40)" }}
-                  >
-                    {label}
-                  </p>
-                </div>
+                  <Link to="/book">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full mt-4 border-primary text-primary hover:bg-secondary text-xs"
+                    >
+                      Book Appointment
+                    </Button>
+                  </Link>
+                </motion.div>
               ))}
             </div>
-            <Link
-              to="/shop"
-              className="inline-flex items-center gap-2 text-sm font-bold tracking-wide gold-text hover:gap-3 transition-all"
-              data-ocid="story.link"
-            >
-              Explore Our Ingredients <ArrowRight size={15} />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonial */}
-      <section
-        className="py-16 text-center"
-        style={{ background: "oklch(0.90 0.032 20)" }}
-      >
-        <div className="max-w-3xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex justify-center mb-4">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <span key={s} className="text-xl gold-text">
-                  ★
-                </span>
-              ))}
-            </div>
-            <blockquote
-              className="font-display text-xl md:text-2xl italic font-medium mb-4"
-              style={{ color: "oklch(0.22 0.010 30)" }}
-            >
-              &ldquo;The Rose Glow Serum transformed my skin in just two weeks.
-              I&apos;ve never received so many compliments. Absolutely worth
-              every penny.&rdquo;
-            </blockquote>
-            <p
-              className="text-sm font-semibold tracking-wide"
-              style={{ color: "oklch(0.52 0.018 40)" }}
-            >
-              — Priya S., Verified Customer
-            </p>
-          </motion.div>
+          )}
         </div>
       </section>
     </div>

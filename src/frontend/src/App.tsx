@@ -6,12 +6,10 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { Layout } from "./components/Layout";
-import { CartProvider } from "./context/CartContext";
-import { CartPage } from "./pages/CartPage";
-import { ContactPage } from "./pages/ContactPage";
+import { AdminPage } from "./pages/AdminPage";
+import { BookAppointmentPage } from "./pages/BookAppointmentPage";
 import { HomePage } from "./pages/HomePage";
-import { ProductDetailPage } from "./pages/ProductDetailPage";
-import { ShopPage } from "./pages/ShopPage";
+import { MyAppointmentsPage } from "./pages/MyAppointmentsPage";
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -23,36 +21,29 @@ const indexRoute = createRoute({
   component: HomePage,
 });
 
-const shopRoute = createRoute({
+const bookRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/shop",
-  component: ShopPage,
+  path: "/book",
+  component: BookAppointmentPage,
 });
 
-const productRoute = createRoute({
+const myAppointmentsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/product/$id",
-  component: ProductDetailPage,
+  path: "/my-appointments",
+  component: MyAppointmentsPage,
 });
 
-const cartRoute = createRoute({
+const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/cart",
-  component: CartPage,
-});
-
-const contactRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/contact",
-  component: ContactPage,
+  path: "/admin",
+  component: AdminPage,
 });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  shopRoute,
-  productRoute,
-  cartRoute,
-  contactRoute,
+  bookRoute,
+  myAppointmentsRoute,
+  adminRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -65,9 +56,9 @@ declare module "@tanstack/react-router" {
 
 export default function App() {
   return (
-    <CartProvider>
+    <>
       <RouterProvider router={router} />
       <Toaster position="top-right" />
-    </CartProvider>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,52 +6,54 @@
 
 @layer base {
   :root {
-    /* Glowify Cosmo Design Tokens */
-    /* Cream background: #F6EFE6 */
-    --background: 0.95 0.018 75;
-    /* Near-black text: #1F1F1F */
-    --foreground: 0.18 0.005 30;
-    /* Card (white-ish cream) */
-    --card: 0.97 0.01 75;
-    --card-foreground: 0.18 0.005 30;
-    /* Popover */
-    --popover: 0.97 0.01 75;
-    --popover-foreground: 0.18 0.005 30;
-    /* Primary: gold/bronze #C7A46D */
-    --primary: 0.72 0.085 70;
-    --primary-foreground: 0.97 0.01 75;
-    /* Secondary: soft blush */
-    --secondary: 0.9 0.032 20;
-    --secondary-foreground: 0.18 0.005 30;
-    /* Muted: warm gray */
-    --muted: 0.92 0.015 60;
-    --muted-foreground: 0.48 0.018 60;
-    /* Accent: deeper gold */
-    --accent: 0.72 0.085 70;
-    --accent-foreground: 0.97 0.01 75;
-    /* Destructive */
+    /* MedBook – Deep steel blue #2F4A63 = oklch(0.38 0.068 234) */
+    /* Ice blue bg #EAF4FB = oklch(0.96 0.018 218) */
+
+    --background: 0.96 0.018 218;
+    --foreground: 0.16 0.02 240;
+
+    --card: 1 0 0;
+    --card-foreground: 0.16 0.02 240;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.16 0.02 240;
+
+    /* Primary: deep slate blue #2F4A63 */
+    --primary: 0.38 0.068 234;
+    --primary-foreground: 1 0 0;
+
+    /* Secondary: medium blue */
+    --secondary: 0.9 0.03 218;
+    --secondary-foreground: 0.38 0.068 234;
+
+    --muted: 0.93 0.02 220;
+    --muted-foreground: 0.52 0.04 230;
+
+    --accent: 0.55 0.12 234;
+    --accent-foreground: 1 0 0;
+
     --destructive: 0.55 0.22 22;
-    --destructive-foreground: 0.97 0.01 75;
-    /* Border: #E6D7CC */
-    --border: 0.88 0.022 60;
-    --input: 0.88 0.022 60;
-    --ring: 0.72 0.085 70;
-    --radius: 0.5rem;
-    /* Chart */
-    --chart-1: 0.72 0.085 70;
-    --chart-2: 0.84 0.04 15;
-    --chart-3: 0.9 0.032 20;
-    --chart-4: 0.48 0.018 60;
-    --chart-5: 0.62 0.065 50;
-    /* Sidebar */
-    --sidebar: 0.97 0.01 75;
-    --sidebar-foreground: 0.18 0.005 30;
-    --sidebar-primary: 0.72 0.085 70;
-    --sidebar-primary-foreground: 0.97 0.01 75;
-    --sidebar-accent: 0.9 0.032 20;
-    --sidebar-accent-foreground: 0.18 0.005 30;
-    --sidebar-border: 0.88 0.022 60;
-    --sidebar-ring: 0.72 0.085 70;
+    --destructive-foreground: 1 0 0;
+
+    --border: 0.88 0.025 220;
+    --input: 0.88 0.025 220;
+    --ring: 0.38 0.068 234;
+    --radius: 0.75rem;
+
+    --chart-1: 0.38 0.068 234;
+    --chart-2: 0.55 0.12 234;
+    --chart-3: 0.72 0.09 218;
+    --chart-4: 0.84 0.04 218;
+    --chart-5: 0.65 0.15 150;
+
+    --sidebar: 0.38 0.068 234;
+    --sidebar-foreground: 1 0 0;
+    --sidebar-primary: 0.55 0.12 234;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.44 0.08 234;
+    --sidebar-accent-foreground: 1 0 0;
+    --sidebar-border: 0.44 0.07 234;
+    --sidebar-ring: 0.55 0.12 234;
   }
 
   * {
@@ -60,119 +62,116 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Plus Jakarta Sans", sans-serif;
-  }
-
-  h1,
-  h2,
-  h3,
-  .font-serif {
-    font-family: "Playfair Display", serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
 }
 
 @layer components {
-  .utility-strip {
-    background-color: oklch(0.88 0.03 20);
+  .med-header {
+    background-color: oklch(0.38 0.068 234);
   }
 
-  .hero-bg {
-    background-color: oklch(0.9 0.032 20);
-  }
-
-  .footer-bg {
+  .med-hero {
     background: linear-gradient(
-      135deg,
-      oklch(0.84 0.04 15) 0%,
-      oklch(0.88 0.035 15) 100%
+      160deg,
+      oklch(0.93 0.025 218) 0%,
+      oklch(0.97 0.012 215) 100%
     );
   }
 
-  .gold-text {
-    color: oklch(0.68 0.09 68);
-  }
-
-  .btn-gold {
-    background-color: oklch(0.68 0.09 68);
-    color: oklch(0.97 0.01 75);
-    letter-spacing: 0.12em;
-    font-size: 0.75rem;
+  .step-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    text-transform: uppercase;
-    padding: 0.75rem 2rem;
-    transition: all 0.25s ease;
+    letter-spacing: 0.02em;
   }
 
-  .btn-gold:hover {
-    background-color: oklch(0.62 0.085 68);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px oklch(0.68 0.09 68 / 0.3);
+  .step-pill.active .step-num {
+    background-color: oklch(0.38 0.068 234);
+    color: white;
   }
 
-  .btn-outline-gold {
-    border: 1.5px solid oklch(0.68 0.09 68);
-    color: oklch(0.68 0.09 68);
-    letter-spacing: 0.10em;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    padding: 0.625rem 1.5rem;
-    transition: all 0.25s ease;
-    background: transparent;
+  .step-pill.done .step-num {
+    background-color: oklch(0.55 0.15 150);
+    color: white;
   }
 
-  .btn-outline-gold:hover {
-    background-color: oklch(0.68 0.09 68);
-    color: oklch(0.97 0.01 75);
-  }
-
-  .product-card {
-    background-color: oklch(0.97 0.01 75);
-    border: 1px solid oklch(0.88 0.022 60);
-    border-radius: 0.75rem;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px oklch(0.18 0.005 30 / 0.12);
-  }
-
-  .section-title {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
+  .step-num {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: oklch(0.18 0.005 30);
-    letter-spacing: -0.01em;
+    background-color: oklch(0.88 0.025 220);
+    color: oklch(0.52 0.04 230);
+    transition: all 0.2s ease;
   }
 
-  .nav-link {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: oklch(0.3 0.01 30);
-    transition: color 0.2s ease;
-    position: relative;
+  .time-slot {
+    border: 1.5px solid oklch(0.88 0.025 220);
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    color: oklch(0.38 0.068 234);
   }
 
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0;
-    height: 1.5px;
-    background-color: oklch(0.68 0.09 68);
-    transition: width 0.25s ease;
+  .time-slot:hover {
+    border-color: oklch(0.38 0.068 234);
+    background-color: oklch(0.93 0.025 218);
   }
 
-  .nav-link:hover {
-    color: oklch(0.68 0.09 68);
+  .time-slot.selected {
+    background-color: oklch(0.38 0.068 234);
+    border-color: oklch(0.38 0.068 234);
+    color: white;
   }
 
-  .nav-link:hover::after {
-    width: 100%;
+  .doctor-card {
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    box-shadow: 0 2px 8px oklch(0.38 0.068 234 / 0.08);
+  }
+
+  .doctor-card:hover {
+    border-color: oklch(0.38 0.068 234);
+    box-shadow: 0 6px 20px oklch(0.38 0.068 234 / 0.15);
+    transform: translateY(-2px);
+  }
+
+  .doctor-card.selected {
+    border-color: oklch(0.38 0.068 234);
+    background-color: oklch(0.96 0.018 218);
+    box-shadow: 0 6px 20px oklch(0.38 0.068 234 / 0.2);
+  }
+
+  .status-badge-pending {
+    background-color: oklch(0.96 0.1 80);
+    color: oklch(0.52 0.12 70);
+    border: 1px solid oklch(0.88 0.09 76);
+  }
+
+  .status-badge-confirmed {
+    background-color: oklch(0.93 0.1 145);
+    color: oklch(0.42 0.15 145);
+    border: 1px solid oklch(0.8 0.12 145);
+  }
+
+  .status-badge-cancelled {
+    background-color: oklch(0.95 0.06 22);
+    color: oklch(0.52 0.16 22);
+    border: 1px solid oklch(0.84 0.1 22);
   }
 }

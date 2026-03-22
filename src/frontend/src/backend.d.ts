@@ -7,72 +7,34 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface MenuItem {
+export interface Doctor {
     id: bigint;
+    bio: string;
     name: string;
-    description: string;
-    restaurantId: bigint;
-    category: Category;
-    price: bigint;
+    specialty: string;
 }
 export type Time = bigint;
-export interface OrderItem {
-    name: string;
-    quantity: bigint;
-    price: bigint;
-    menuItemId: bigint;
-}
-export interface Restaurant {
+export interface Appointment {
     id: bigint;
-    deliveryFee: bigint;
-    minOrder: bigint;
-    name: string;
-    cuisineType: CuisineType;
-    description: string;
-    isOpen: boolean;
-    deliveryTime: bigint;
-    location: string;
-    avgRating: bigint;
-}
-export interface Order {
-    id: bigint;
-    customerName: string;
     status: Status;
-    deliveryAddress: string;
-    total: bigint;
-    deliveryFee: bigint;
-    restaurantId: bigint;
+    doctorId: bigint;
+    patientEmail: string;
+    date: string;
     timestamp: Time;
-    phone: string;
-    items: Array<OrderItem>;
-    subtotal: bigint;
-}
-export enum Category {
-    mains = "mains",
-    desserts = "desserts",
-    starters = "starters",
-    drinks = "drinks"
-}
-export enum CuisineType {
-    tacos = "tacos",
-    chinese = "chinese",
-    sushi = "sushi",
-    indian = "indian",
-    burgers = "burgers",
-    pizza = "pizza"
+    patientName: string;
+    timeSlot: string;
+    reason: string;
 }
 export enum Status {
-    preparing = "preparing",
+    cancelled = "cancelled",
     pending = "pending",
-    outForDelivery = "outForDelivery",
-    delivered = "delivered"
+    confirmed = "confirmed"
 }
 export interface backendInterface {
-    getAllOrders(): Promise<Array<Order>>;
-    getMenuItems(restaurantId: bigint): Promise<Array<MenuItem>>;
-    getOrder(id: bigint): Promise<Order>;
-    getRestaurant(id: bigint): Promise<Restaurant>;
-    getRestaurants(): Promise<Array<Restaurant>>;
-    placeOrder(restaurantId: bigint, customerName: string, deliveryAddress: string, phone: string, items: Array<OrderItem>): Promise<bigint>;
-    updateOrderStatus(id: bigint, status: Status): Promise<void>;
+    bookAppointment(doctorId: bigint, patientName: string, patientEmail: string, date: string, timeSlot: string, reason: string): Promise<bigint>;
+    getAllAppointments(): Promise<Array<Appointment>>;
+    getAppointmentsByEmail(email: string): Promise<Array<Appointment>>;
+    getDoctor(id: bigint): Promise<Doctor>;
+    getDoctors(): Promise<Array<Doctor>>;
+    updateAppointmentStatus(id: bigint, status: Status): Promise<void>;
 }

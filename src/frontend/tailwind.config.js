@@ -16,9 +16,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['"Plus Jakarta Sans"', 'sans-serif'],
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        body: ['"Inter"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "oklch(var(--border))",
@@ -71,22 +70,14 @@ export default {
           border: "oklch(var(--sidebar-border))",
           ring: "oklch(var(--sidebar-ring))",
         },
-        /* Glowify brand tokens */
-        blush: {
-          50: "oklch(0.97 0.012 20)",
-          100: "oklch(0.94 0.022 18)",
-          200: "oklch(0.90 0.032 17)",
-          300: "oklch(0.85 0.042 16)",
-          400: "oklch(0.78 0.055 15)",
+        navy: {
+          light: "oklch(0.55 0.10 234)",
+          DEFAULT: "oklch(0.38 0.068 234)",
+          dark: "oklch(0.28 0.055 234)",
         },
-        gold: {
-          light: "oklch(0.84 0.055 75)",
-          DEFAULT: "oklch(0.72 0.085 70)",
-          dark: "oklch(0.62 0.085 68)",
-        },
-        cream: {
-          DEFAULT: "oklch(0.95 0.018 75)",
-          light: "oklch(0.97 0.010 75)",
+        ice: {
+          DEFAULT: "oklch(0.96 0.018 218)",
+          light: "oklch(0.98 0.010 218)",
         },
       },
       borderRadius: {
@@ -94,14 +85,13 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
         xl: "calc(var(--radius) + 4px)",
-        "2xl": "calc(var(--radius) + 8px)",
-        "3xl": "1.5rem",
+        "2xl": "1.25rem",
+        "3xl": "1.75rem",
       },
       boxShadow: {
-        xs: "0 1px 2px 0 rgba(0,0,0,0.05)",
-        card: "0 4px 6px -1px oklch(0.18 0.005 30 / 0.06), 0 10px 15px -3px oklch(0.18 0.005 30 / 0.04)",
-        "card-hover": "0 12px 40px oklch(0.18 0.005 30 / 0.14)",
-        gold: "0 4px 20px oklch(0.68 0.090 68 / 0.28)",
+        card: "0 2px 12px oklch(0.38 0.068 234 / 0.08), 0 1px 3px oklch(0.38 0.068 234 / 0.06)",
+        "card-hover": "0 8px 30px oklch(0.38 0.068 234 / 0.16)",
+        "booking": "0 8px 40px oklch(0.38 0.068 234 / 0.12)",
       },
       keyframes: {
         "accordion-down": {
@@ -113,16 +103,16 @@ export default {
           to: { height: "0" },
         },
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(20px)" },
+          from: { opacity: "0", transform: "translateY(24px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in": {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
-        "slide-right": {
-          from: { transform: "translateX(-20px)", opacity: "0" },
-          to: { transform: "translateX(0)", opacity: "1" },
+        "slide-in": {
+          from: { opacity: "0", transform: "translateX(-12px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
         },
       },
       animation: {
@@ -130,7 +120,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.5s ease-out",
         "fade-in": "fade-in 0.4s ease-out",
-        "slide-right": "slide-right 0.4s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
       },
     },
   },

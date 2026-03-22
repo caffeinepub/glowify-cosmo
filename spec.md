@@ -1,28 +1,29 @@
-# Glowify Cosmo
+# Appointment Booking App
 
 ## Current State
-New project. No existing app.
+New project. No existing application files.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Cosmetics e-commerce website named "Glowify Cosmo"
-- Product catalog with categories: Skincare, Makeup, Fragrance
-- Product listing pages with filters by category
-- Product detail pages with description, price, images, add to cart
-- Shopping cart with quantity management and checkout summary
-- Hero banner with featured collection
-- Bestsellers / featured products section
-- Category tiles section
-- Ingredient highlight / brand story section
-- Footer with newsletter signup, links, social icons
+- Full appointment booking web app with step-by-step booking flow
+- Service selection (e.g., haircut, facial, massage, consultation)
+- Professional/staff selection
+- Date & time slot picker
+- Booking confirmation with summary
+- Admin panel to manage appointments, services, and professionals
+- View all bookings (admin)
+- Cancel/manage bookings
 
 ### Modify
-- N/A
+N/A
 
 ### Remove
-- N/A
+N/A
 
 ## Implementation Plan
-1. Backend: Products store (name, category, price, description, rating, stock), cart management, order placement
-2. Frontend: Home page (hero, categories, bestsellers, brand section), Shop/Category pages, Product detail page, Cart page, Header/Footer components
+1. Backend: store services, professionals, appointments with CRUD
+2. Backend: time slot availability logic per professional per date
+3. Frontend: 4-step booking flow (service → professional → date/time → confirmation)
+4. Frontend: admin dashboard for viewing and managing all bookings
+5. Frontend: hero landing page with booking CTA
